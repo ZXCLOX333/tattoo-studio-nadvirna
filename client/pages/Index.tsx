@@ -602,10 +602,27 @@ export default function Index() {
     
     
     try {
-      // TODO: Implement addReview functionality
-      console.log('Review would be added:', { avatar, text, stars });
-      setShowReviewModal(false);
-      setReviewForm({ avatar: "", text: "", stars: 5 });
+      const response = await fetch('/.netlify/functions/addReview', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ avatar, text, stars })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          // Додаємо новий відгук до списку
+          setReviews(prev => [...prev, data.review]);
+          setShowReviewModal(false);
+          setReviewForm({ avatar: "", text: "", stars: 5 });
+        } else {
+          console.error('Failed to add review:', data.message);
+        }
+      } else {
+        console.error('Failed to add review');
+      }
     } catch (err) {
       console.error('Failed to add review:', err);
     }

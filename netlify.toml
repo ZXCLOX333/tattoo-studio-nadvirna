@@ -6,6 +6,11 @@
   NODE_VERSION = "18"
 
 [[redirects]]
-  from = "/api/*"
+  from = "/api/reviews"
   to = "/.netlify/functions/getReviews"
+  status = 200
+
+[[redirects]]
+  from = "/api/addReview"
+  to = "/.netlify/functions/addReview"
   status = 200

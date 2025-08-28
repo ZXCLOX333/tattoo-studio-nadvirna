@@ -2,4 +2,5 @@
 /* /index.html 200
 
 # API redirects
-/api/* /.netlify/functions/getReviews 200
+/api/reviews /.netlify/functions/getReviews 200
+/api/addReview /.netlify/functions/addReview 200
