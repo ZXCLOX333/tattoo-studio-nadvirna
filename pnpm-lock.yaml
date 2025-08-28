@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@netlify/blobs':
+        specifier: ^1.0.0
+        version: 1.6.1
       undici:
         specifier: ^7.15.0
         version: 7.15.0
@@ -445,6 +448,10 @@ packages:
     resolution: {integrity: sha512-Obb0/gEd/HReTlg8ttaYk+0m62gQJmCblMOjHSMHRrBP2zdfKMHLCRbh/6ex9fSUJMKdjjIEiohwkbGD3wj2Nw==}
     peerDependencies:
       three: '>= 0.159.0'
+
+  '@netlify/blobs@1.6.1':
+    resolution: {integrity: sha512-2q9vc6hOchppVfrMXuvdUTm4I+tz0AD/exEjtO/DolvPicghJqurVTjveP6ol5PItMSv07tN2P8Kkb1RChAAWw==}
+    engines: {node: ^14.16.0 || >=16.0.0}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2036,6 +2043,10 @@ packages:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
     engines: {node: '>= 6'}
 
+  p-map@6.0.0:
+    resolution: {integrity: sha512-T8BatKGY+k5rU+Q/GTYgrEf2r4xRMevAN5mtXc2aPc4rS1j3s+vWTaO2Wag94neXuCAUAs8cxBL9EeB5EA6diw==}
+    engines: {node: '>=16'}
+
   package-json-from-dist@1.0.1:
     resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
 
@@ -2847,6 +2858,10 @@ snapshots:
     dependencies:
       promise-worker-transferable: 1.0.4
       three: 0.176.0
+
+  '@netlify/blobs@1.6.1':
+    dependencies:
+      p-map: 6.0.0
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -4410,6 +4425,8 @@ snapshots:
   object-assign@4.1.1: {}
 
   object-hash@3.0.0: {}
+
+  p-map@6.0.0: {}
 
   package-json-from-dist@1.0.1: {}
 
