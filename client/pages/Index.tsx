@@ -623,7 +623,7 @@ export default function Index() {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${window.location.origin}/api/contact`, {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
