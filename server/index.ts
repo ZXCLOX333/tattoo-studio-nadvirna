@@ -13,8 +13,11 @@ import telegramRouter from "./routes/telegram";
 export function createServer() {
   const app = express();
 
-  // Middleware
-  app.use(cors({ origin: "http://localhost:8080" }));
+  // Middleware - виправте CORS
+  app.use(cors({ 
+    origin: ["http://localhost:8080", "https://garyacha-golka-tattoo-nadvirna.netlify.app"],
+    credentials: true 
+  }));
   app.use(bodyParser.json({ limit: "10mb" }));
   app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
