@@ -7,11 +7,7 @@ import { useMainReviews } from "@/hooks/useMainReviews";
 
 const StarRating = ({ count = 5 }: { count?: number }) => (
   <div className="flex gap-1 mt-[14px] ml-0">
-    {Array.from({ length: count }).map((_, i) => (
-      <svg key={i} width="12" height="11" viewBox="0 0 12 11" fill="none">
-        <path d="M6 11L5.13 10.2087C2.04 7.40926 0 5.55695 0 3.297C0 1.44469 1.452 0 3.3 0C4.344 0 5.346 0.485559 6 1.24687C6.654 0.485559 7.656 0 8.7 0C10.548 0 12 1.44469 12 3.297C12 5.55695 9.96 7.40926 6.87 10.2087L6 11Z" fill="#CF1B1B"/>
-      </svg>
-    ))}
+    {"❤️".repeat(count)}
   </div>
 );
 
@@ -271,6 +267,12 @@ export default function Index() {
   // Додаємо стан для мобільного меню
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
+  // Стан для відгуків з бекенду
+  const [reviews, setReviews] = useState<Array<{id: number, text: string, rating: number, photo: string}>>([]);
+  const [averageRating, setAverageRating] = useState(5);
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [reviewsError, setReviewsError] = useState<string | null>(null);
+  
   // Ефект для анімації мобільних пунктів меню
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -526,8 +528,37 @@ export default function Index() {
     setShowSubmitButton(canShowButton);
   };
 
-  // --- Відгуки для двох рядків ---
-  const { reviews1, reviews2, isLoading: reviewsLoading, error: reviewsError, addReview, averageRating, reviewsCount } = useMainReviews();
+  // --- Відгуки з бекенду ---
+  // Завантаження відгуків з API
+  useEffect(() => {
+    const loadReviews = async () => {
+      try {
+        setReviewsLoading(true);
+        const response = await fetch('/.netlify/functions/getReviews');
+        if (response.ok) {
+          const data = await response.json();
+          setReviews(data.reviews || []);
+          setAverageRating(data.averageRating || 5);
+        } else {
+          console.error('Failed to load reviews');
+          setReviewsError('Failed to fetch');
+          // Fallback до дефолтних відгуків
+          setReviews([]);
+          setAverageRating(5);
+        }
+      } catch (error) {
+        console.error('Error loading reviews:', error);
+        setReviewsError('Failed to fetch');
+        // Fallback до дефолтних відгуків
+        setReviews([]);
+        setAverageRating(5);
+      } finally {
+        setReviewsLoading(false);
+      }
+    };
+
+    loadReviews();
+  }, []);
 
   // --- Додавання відгуку ---
   const [showReviewModal, setShowReviewModal] = useState(false);
@@ -571,7 +602,8 @@ export default function Index() {
     
     
     try {
-      await addReview({ avatar, text, stars });
+      // TODO: Implement addReview functionality
+      console.log('Review would be added:', { avatar, text, stars });
       setShowReviewModal(false);
       setReviewForm({ avatar: "", text: "", stars: 5 });
     } catch (err) {
@@ -1051,9 +1083,9 @@ export default function Index() {
             <p className="text-[#E7E6E6] font-open-sans font-semibold text-sm sm:text-base md:text-xl lg:text-[26px] leading-4 tracking-[0.52px] lg:text-left">Ми працюємо з 2023</p>
           </div>
           <div className="text-center flex flex-col items-center gap-2 sm:gap-3 md:gap-4 lg:gap-[19px] lg:mt-[37px] ml-8 sm:ml-12 md:ml-16 lg:ml-24">
-            <div className="text-[#E7E6E6] font-open-sans font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-[60px] leading-4 tracking-[0px]">{averageRating}</div>
+            <div className="text-[#E7E6E6] font-open-sans font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-[60px] leading-4 tracking-[0px]">{averageRating} ❤️</div>
             <p className="text-white font-open-sans font-light text-xs sm:text-sm md:text-base lg:text-lg leading-[25px] tracking-[0.18px] w-[80px] sm:w-[100px] md:w-[120px] lg:w-[131px] text-center">Наша оцінка</p>
-            <p className="text-white font-open-sans font-light text-xs sm:text-xs md:text-sm lg:text-sm leading-[18px] tracking-[0.14px] opacity-80 lg:mt-[-8px]" style={{ marginTop: "-8px" }}>({reviewsCount} відгуків)</p>
+            <p className="text-white font-open-sans font-light text-xs sm:text-xs md:text-sm lg:text-sm leading-[18px] tracking-[0.14px] opacity-80 lg:mt-[-8px]" style={{ marginTop: "-8px" }}>({reviews.length} відгуків)</p>
           </div>
         </div>
       </section>
@@ -1286,31 +1318,38 @@ export default function Index() {
             </div>
           )}
           
-          {/* 1 ряд */}
-          <AutoScrollRow speed={0.5}>
-            {reviews1.map((r, i) => (
-              <TestimonialCard key={i + r.text.slice(0, 10)} avatar={r.avatar} text={r.text} stars={r.stars} />
-            ))}
-          </AutoScrollRow>
-          {/* 2 ряд */}
-          <AutoScrollRow speed={0.3} reverse>
-            {reviews2.map((r, i) => (
-              <TestimonialCard key={i + r.text.slice(0, 10)} avatar={r.avatar} text={r.text} stars={r.stars} />
-            ))}
-          </AutoScrollRow>
-          {/* Додати відгук кнопка */}
-          <div className="mt-[12px]">
-            <button
-              className="font-open-sans text-[12px] leading-[15px] tracking-[-0.01em] text-tattoo-light opacity-80"
-              style={{
-                fontWeight: 400,
-                letterSpacing: "-1%",
-              }}
-              onClick={handleAddReview}
-            >
-              Додати відгук
-            </button>
-          </div>
+          {/* Відгуки тільки після завантаження */}
+          {!reviewsLoading && !reviewsError && reviews.length > 0 && (
+            <>
+              {/* 1 ряд */}
+              <AutoScrollRow speed={0.5}>
+                {reviews.slice(0, Math.ceil(reviews.length / 2)).map((r, i) => (
+                  <TestimonialCard key={r.id || i} avatar={r.photo} text={r.text} stars={r.rating} />
+                ))}
+              </AutoScrollRow>
+              {/* 2 ряд */}
+              <AutoScrollRow speed={0.3} reverse>
+                {reviews.slice(Math.ceil(reviews.length / 2)).map((r, i) => (
+                  <TestimonialCard key={r.id || i} avatar={r.photo} text={r.text} stars={r.rating} />
+                ))}
+              </AutoScrollRow>
+            </>
+          )}
+          {/* Додати відгук кнопка тільки після завантаження */}
+          {!reviewsLoading && !reviewsError && (
+            <div className="mt-[12px]">
+              <button
+                className="font-open-sans text-[12px] leading-[15px] tracking-[-0.01em] text-tattoo-light opacity-80"
+                style={{
+                  fontWeight: 400,
+                  letterSpacing: "-1%",
+                }}
+                onClick={handleAddReview}
+              >
+                Додати відгук
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Модалка для додавання відгуку */}
