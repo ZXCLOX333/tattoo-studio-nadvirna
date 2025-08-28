@@ -520,7 +520,8 @@ export default function Index() {
     
     // Перевіряємо чи можна показати кнопку
     const canShowButton = newFormData.name.trim().length > 0 && 
-                         newFormData.phone.trim().length >= 10; // Мінімум 10 цифр для українського номера
+                         newFormData.phone.trim().length >= 10 && // Мінімум 10 цифр для українського номера
+                         newFormData.message.trim().length > 0; // Повідомлення також обов'язкове
     
     setShowSubmitButton(canShowButton);
   };
