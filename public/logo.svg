@@ -1,0 +1,91 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Помаранчеве світіння для тексту -->
+    <filter id="orangeGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Градієнт для помаранчевого кольору -->
+    <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF4500;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Градієнт для сірого кольору -->
+    <linearGradient id="grayGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#CCCCCC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Фон (прозорий) -->
+  
+  <!-- Основний текст "Garyacha golka" з помаранчевим світінням -->
+  <text x="100" y="45" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="24" font-weight="bold" fill="url(#orangeGradient)" filter="url(#orangeGlow)">
+    Garyacha golka
+  </text>
+  
+  <!-- Підзаголовок "TATTOO STUDIO" -->
+  <text x="100" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">
+    TATTOO STUDIO
+  </text>
+  
+  <!-- Схрещені тату-машинки -->
+  <!-- Перша машинка (ліва) -->
+  <g transform="translate(70, 80)">
+    <!-- Корпус машинки -->
+    <rect x="0" y="0" width="20" height="8" rx="2" fill="white" stroke="black" stroke-width="0.5"/>
+    <!-- Голка -->
+    <line x1="10" y1="8" x2="10" y2="25" stroke="white" stroke-width="1"/>
+    <!-- Деталі машинки -->
+    <circle cx="5" cy="4" r="1" fill="black"/>
+    <circle cx="15" cy="4" r="1" fill="black"/>
+    <rect x="8" y="2" width="4" height="2" fill="black"/>
+  </g>
+  
+  <!-- Друга машинка (права) -->
+  <g transform="translate(110, 80)">
+    <!-- Корпус машинки -->
+    <rect x="0" y="0" width="20" height="8" rx="2" fill="white" stroke="black" stroke-width="0.5"/>
+    <!-- Голка -->
+    <line x1="10" y1="8" x2="10" y2="25" stroke="white" stroke-width="1"/>
+    <!-- Деталі машинки -->
+    <circle cx="5" cy="4" r="1" fill="black"/>
+    <circle cx="15" cy="4" r="1" fill="black"/>
+    <rect x="8" y="2" width="4" height="2" fill="black"/>
+  </g>
+  
+  <!-- Квітковий візерунок внизу -->
+  <g transform="translate(100, 160)">
+    <!-- Центральна троянда -->
+    <g fill="url(#grayGradient)">
+      <!-- Пелюстки троянди -->
+      <path d="M0,-8 C2,-6 4,-4 6,-2 C4,0 2,2 0,4 C-2,2 -4,0 -6,-2 C-4,-4 -2,-6 0,-8 Z"/>
+      <path d="M8,0 C6,2 4,4 2,6 C0,4 -2,2 -4,0 C-2,-2 0,-4 2,-6 C4,-4 6,-2 8,0 Z"/>
+      <path d="M0,8 C-2,6 -4,4 -6,2 C-4,0 -2,-2 0,-4 C2,-2 4,0 6,2 C4,4 2,6 0,8 Z"/>
+      <path d="M-8,0 C-6,-2 -4,-4 -2,-6 C0,-4 2,-2 4,0 C2,2 0,4 -2,6 C-4,4 -6,2 -8,0 Z"/>
+      
+      <!-- Додаткові пелюстки -->
+      <path d="M5,-5 C6,-3 7,-1 8,1 C7,3 6,5 5,7 C3,5 1,3 -1,1 C1,-1 3,-3 5,-5 Z"/>
+      <path d="M-5,5 C-6,3 -7,1 -8,-1 C-7,-3 -6,-5 -5,-7 C-3,-5 -1,-3 1,-1 C-1,1 -3,3 -5,5 Z"/>
+    </g>
+    
+    <!-- Листя -->
+    <g fill="url(#grayGradient)">
+      <path d="M-15,0 C-12,-3 -8,-5 -5,-6 C-3,-4 -1,-2 0,0 C1,2 3,4 5,6 C8,5 12,3 15,0 C12,-3 8,-5 5,-6 C3,-4 1,-2 0,0 C-1,2 -3,4 -5,6 C-8,5 -12,3 -15,0 Z"/>
+      <path d="M0,-15 C3,-12 5,-8 6,-5 C4,-3 2,-1 0,0 C-2,1 -4,3 -6,5 C-5,8 -3,12 0,15 C3,12 5,8 6,5 C4,3 2,1 0,0 C-2,-1 -4,-3 -6,-5 C-5,-8 -3,-12 0,-15 Z"/>
+    </g>
+    
+    <!-- Шипи -->
+    <g stroke="url(#grayGradient)" stroke-width="1" fill="none">
+      <line x1="-12" y1="-8" x2="-10" y2="-6"/>
+      <line x1="12" y1="-8" x2="10" y2="-6"/>
+      <line x1="-12" y1="8" x2="-10" y2="6"/>
+      <line x1="12" y1="8" x2="10" y2="6"/>
+    </g>
+  </g>
+</svg>
