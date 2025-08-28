@@ -1,24 +1,17 @@
 import { RequestHandler } from "express";
-import fs from "fs/promises";
-import path from "path";
 import { Review, ReviewsResponse, AddReviewRequest, AddReviewResponse } from "@shared/api";
 
-const REVIEWS_FILE_PATH = path.join(process.cwd(), "netlify", "functions", "reviews.json");
+// Store reviews in memory (for serverless functions)
+let reviews: Review[] = [];
 
-// Helper function to read reviews from file
+// Helper function to read reviews from memory
 async function readReviews(): Promise<Review[]> {
-  try {
-    const data = await fs.readFile(REVIEWS_FILE_PATH, "utf-8");
-    return JSON.parse(data);
-  } catch (error) {
-    // If file doesn't exist or is empty, return empty array
-    return [];
-  }
+  return reviews;
 }
 
-// Helper function to write reviews to file
-async function writeReviews(reviews: Review[]): Promise<void> {
-  await fs.writeFile(REVIEWS_FILE_PATH, JSON.stringify(reviews, null, 2));
+// Helper function to write reviews to memory
+async function writeReviews(newReviews: Review[]): Promise<void> {
+  reviews = newReviews;
 }
 
 // GET /api/reviews - Get all reviews

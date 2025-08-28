@@ -88,7 +88,10 @@ export const sendContact: RequestHandler = async (req, res) => {
     const { name, phone, message }: ContactRequest = req.body;
     
     // Валідація
+    console.log('Contact form data:', { name, phone, message });
+    
     if (!name || !phone || !message) {
+      console.log('Missing required fields');
       return res.status(400).json({ 
         success: false, 
         message: "Всі поля обов'язкові" 
@@ -96,6 +99,7 @@ export const sendContact: RequestHandler = async (req, res) => {
     }
 
     if (name.trim().length === 0 || phone.trim().length === 0 || message.trim().length === 0) {
+      console.log('Empty fields detected');
       return res.status(400).json({ 
         success: false, 
         message: "Всі поля повинні бути заповнені" 
