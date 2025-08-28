@@ -19,6 +19,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@netlify/blobs": "^1.0.0",
     "undici": "^7.15.0",
     "zod": "^3.25.76"
   },
