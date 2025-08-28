@@ -3,7 +3,7 @@ import fs from "fs/promises";
 import path from "path";
 import { Review, ReviewsResponse, AddReviewRequest, AddReviewResponse } from "@shared/api";
 
-const REVIEWS_FILE_PATH = path.join(process.cwd(), "reviews.json");
+const REVIEWS_FILE_PATH = path.join(process.cwd(), "netlify", "functions", "reviews.json");
 
 // Helper function to read reviews from file
 async function readReviews(): Promise<Review[]> {
